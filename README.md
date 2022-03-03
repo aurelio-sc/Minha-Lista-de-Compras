@@ -1,3 +1,10 @@
+#Expected Layouts:
+<div align="center">
+    <img src="./src/img/design/Pagina_Inicial.png">
+    <img src="./src/img/design/Lista_Pronta.png">
+    <img src="./src/img/design/Criando_Editando_Lista.png">
+</div>
+
 *Psst — looking for a more complete solution? Check out [SvelteKit](https://kit.svelte.dev), the official framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.*
 
 *Looking for a shareable component template instead? You can [use SvelteKit for that as well](https://kit.svelte.dev/docs#packaging) or the older [sveltejs/component-template](https://github.com/sveltejs/component-template)*
