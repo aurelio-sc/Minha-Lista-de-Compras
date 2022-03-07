@@ -3,45 +3,39 @@
   let newQuantity = '';
   let newItem = '';
 
-  let quantityList = [];
   let itemList = [];
 
+
 function addToList() {
-  itemList = [...itemList, {text: newItem}];
-  quantityList = [...quantityList, {number: newQuantity}]
+  itemList = [...itemList, {text: newItem, number: newQuantity}];
   newItem = '';
   newQuantity = '';
 };
 
 function removeFromList(index) {
   itemList.splice(index, 1)
-  quantityList.splice(index,1)
   itemList = itemList;
-  quantityList = quantityList;
   };
 
 </script>
 
 <div class="list">
 
-  <div class="newListItem">
-    {#each quantityList as item, index}
-    <span class="quantity">{item.number}</span>
-    <br/>
-    {/each}
+  <!--❌-->  
 
-
-    {#each itemList as item, index}
-
-    <span class:checked={item.status} class="item">{item.text}</span>
-    <span on:click={() => removeFromList(index)}>❌</span>
-    <br/>
-    {/each} 
-  </div>
+  {#each itemList as item, index}
+    <div class="newListItem">
+      <span class="quantity">{item.number}</span>
+      <span  class="itemName">{item.text}</span>
+      <span on:click={() => removeFromList(index)} class="removeButton">🛇</span>
+      <br/>
+    </div>
+  {/each} 
+  
 
   <input bind:value={newQuantity} type="number" placeholder="Quant." class="quantity">
   <input bind:value={newItem} type="text" placeholder="Novo item" class="item">
-  <button on:click={addToList}>Adicionar</button>
+  <button on:click={addToList} class="addButton">✚</button>
 
   <br/>
 
@@ -53,7 +47,6 @@ function removeFromList(index) {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .quantity{
@@ -61,11 +54,26 @@ function removeFromList(index) {
 }
 
 .item{
-  width: 10rem;
+  width: 15rem;
   text-align: start;
+}
+
+.itemName{
+  width: 15rem;
+}
+
+.removeButton{
+  color:red;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.addButton{
+  color:blue;
+  background: none;
 }
 </style>
 
-<!--Centralizar os items da lista
-    Alterar ícone de remover
-    Substituir o botão adicionar por uma imagem-->
+<!--
+    Todo:
+-->
