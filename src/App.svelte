@@ -1,6 +1,5 @@
 <script>
 	import List from "./components/List.svelte";
-	export let name;
 </script>
 
 <main>
@@ -10,6 +9,8 @@
 <style>
 	
 	main {
-		text-align: center;	
+		text-align: center;
+		width: 31.25rem;
+		margin: 0 auto;
 	}	
 </style>

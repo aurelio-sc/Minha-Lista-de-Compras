@@ -27,6 +27,9 @@ var app = (function () {
     function is_empty(obj) {
         return Object.keys(obj).length === 0;
     }
+    function null_to_empty(value) {
+        return value == null ? '' : value;
+    }
     function append(target, node) {
         target.appendChild(node);
     }
@@ -399,23 +402,102 @@ var app = (function () {
 
     function create_fragment$3(ctx) {
     	let main;
+    	let div0;
+    	let p;
+    	let t0_value = /*listName*/ ctx[0].text + "";
+    	let t0;
+    	let t1;
+    	let button0;
+    	let div0_class_value;
+    	let t3;
+    	let div1;
+    	let input;
+    	let t4;
+    	let button1;
+    	let div1_class_value;
+    	let mounted;
+    	let dispose;
 
     	const block = {
     		c: function create() {
     			main = element("main");
-    			add_location(main, file$2, 5, 0, 27);
+    			div0 = element("div");
+    			p = element("p");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			button0 = element("button");
+    			button0.textContent = "Alterar";
+    			t3 = space();
+    			div1 = element("div");
+    			input = element("input");
+    			t4 = space();
+    			button1 = element("button");
+    			button1.textContent = "Confirmar";
+    			add_location(p, file$2, 23, 4, 398);
+    			attr_dev(button0, "class", "editButton svelte-1o7si31");
+    			add_location(button0, file$2, 24, 4, 426);
+    			attr_dev(div0, "class", div0_class_value = "" + (null_to_empty(/*listName*/ ctx[0].status) + " svelte-1o7si31"));
+    			attr_dev(div0, "id", "showName");
+    			add_location(div0, file$2, 22, 2, 349);
+    			attr_dev(input, "type", "text");
+    			attr_dev(input, "placeholder", "Nome da lista");
+    			add_location(input, file$2, 27, 4, 558);
+    			attr_dev(button1, "class", "editButton svelte-1o7si31");
+    			add_location(button1, file$2, 28, 4, 638);
+    			attr_dev(div1, "class", div1_class_value = "" + (null_to_empty(/*showListNameInput*/ ctx[1]) + " svelte-1o7si31"));
+    			attr_dev(div1, "id", "editName");
+    			add_location(div1, file$2, 26, 2, 507);
+    			attr_dev(main, "class", "svelte-1o7si31");
+    			add_location(main, file$2, 21, 0, 339);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
+    			append_dev(main, div0);
+    			append_dev(div0, p);
+    			append_dev(p, t0);
+    			append_dev(div0, t1);
+    			append_dev(div0, button0);
+    			append_dev(main, t3);
+    			append_dev(main, div1);
+    			append_dev(div1, input);
+    			set_input_value(input, /*listName*/ ctx[0].text);
+    			append_dev(div1, t4);
+    			append_dev(div1, button1);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(button0, "click", /*editListName*/ ctx[3], false, false, false),
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[4]),
+    					listen_dev(button1, "click", /*updateListName*/ ctx[2], false, false, false)
+    				];
+
+    				mounted = true;
+    			}
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*listName*/ 1 && t0_value !== (t0_value = /*listName*/ ctx[0].text + "")) set_data_dev(t0, t0_value);
+
+    			if (dirty & /*listName*/ 1 && div0_class_value !== (div0_class_value = "" + (null_to_empty(/*listName*/ ctx[0].status) + " svelte-1o7si31"))) {
+    				attr_dev(div0, "class", div0_class_value);
+    			}
+
+    			if (dirty & /*listName*/ 1 && input.value !== /*listName*/ ctx[0].text) {
+    				set_input_value(input, /*listName*/ ctx[0].text);
+    			}
+
+    			if (dirty & /*showListNameInput*/ 2 && div1_class_value !== (div1_class_value = "" + (null_to_empty(/*showListNameInput*/ ctx[1]) + " svelte-1o7si31"))) {
+    				attr_dev(div1, "class", div1_class_value);
+    			}
+    		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(main);
+    			mounted = false;
+    			run_all(dispose);
     		}
     	};
 
@@ -430,16 +512,51 @@ var app = (function () {
     	return block;
     }
 
-    function instance$3($$self, $$props) {
+    function instance$3($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('ListName', slots, []);
+    	let listName = { text: '', status: false };
+    	let showListNameInput = true;
+
+    	function updateListName() {
+    		$$invalidate(0, listName);
+    		$$invalidate(0, listName.status = true, listName);
+    		$$invalidate(1, showListNameInput = false);
+    	}
+
+    	function editListName() {
+    		$$invalidate(1, showListNameInput = true);
+    		$$invalidate(0, listName.status = false, listName);
+    	}
+
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<ListName> was created with unknown prop '${key}'`);
     	});
 
-    	return [];
+    	function input_input_handler() {
+    		listName.text = this.value;
+    		$$invalidate(0, listName);
+    	}
+
+    	$$self.$capture_state = () => ({
+    		listName,
+    		showListNameInput,
+    		updateListName,
+    		editListName
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('listName' in $$props) $$invalidate(0, listName = $$props.listName);
+    		if ('showListNameInput' in $$props) $$invalidate(1, showListNameInput = $$props.showListNameInput);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [listName, showListNameInput, updateListName, editListName, input_input_handler];
     }
 
     class ListName extends SvelteComponentDev {
@@ -498,18 +615,18 @@ var app = (function () {
     			t2 = text(t2_value);
     			t3 = space();
     			span2 = element("span");
-    			span2.textContent = "🛇";
+    			span2.textContent = "❌";
     			t5 = space();
     			br = element("br");
-    			attr_dev(span0, "class", "quantity svelte-tfh30s");
-    			add_location(span0, file$1, 27, 6, 439);
-    			attr_dev(span1, "class", "itemName svelte-tfh30s");
-    			add_location(span1, file$1, 28, 6, 490);
-    			attr_dev(span2, "class", "removeButton svelte-tfh30s");
-    			add_location(span2, file$1, 29, 6, 540);
-    			add_location(br, file$1, 30, 6, 623);
-    			attr_dev(div, "class", "newListItem svelte-tfh30s");
-    			add_location(div, file$1, 26, 4, 406);
+    			attr_dev(span0, "class", "quantity svelte-fx7qs3");
+    			add_location(span0, file$1, 27, 6, 469);
+    			attr_dev(span1, "class", "itemName svelte-fx7qs3");
+    			add_location(span1, file$1, 28, 6, 520);
+    			attr_dev(span2, "class", "removeButton");
+    			add_location(span2, file$1, 29, 6, 570);
+    			add_location(br, file$1, 30, 6, 652);
+    			attr_dev(div, "class", "newListItem svelte-fx7qs3");
+    			add_location(div, file$1, 26, 4, 436);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -590,17 +707,17 @@ var app = (function () {
     			br = element("br");
     			attr_dev(input0, "type", "number");
     			attr_dev(input0, "placeholder", "Quant.");
-    			attr_dev(input0, "class", "quantity svelte-tfh30s");
-    			add_location(input0, file$1, 35, 2, 662);
+    			attr_dev(input0, "class", "quantity svelte-fx7qs3");
+    			add_location(input0, file$1, 35, 2, 691);
     			attr_dev(input1, "type", "text");
     			attr_dev(input1, "placeholder", "Novo item");
-    			attr_dev(input1, "class", "item svelte-tfh30s");
-    			add_location(input1, file$1, 36, 2, 750);
-    			attr_dev(button, "class", "addButton svelte-tfh30s");
-    			add_location(button, file$1, 37, 2, 831);
-    			add_location(br, file$1, 39, 2, 894);
+    			attr_dev(input1, "class", "item svelte-fx7qs3");
+    			add_location(input1, file$1, 36, 2, 779);
+    			attr_dev(button, "class", "addButton svelte-fx7qs3");
+    			add_location(button, file$1, 37, 2, 860);
+    			add_location(br, file$1, 39, 2, 923);
     			attr_dev(div, "class", "list");
-    			add_location(div, file$1, 21, 0, 329);
+    			add_location(div, file$1, 23, 0, 375);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -769,32 +886,43 @@ var app = (function () {
     /* src\components\List.svelte generated by Svelte v3.46.4 */
 
     function create_fragment$1(ctx) {
+    	let listname;
+    	let t;
     	let listitems;
     	let current;
+    	listname = new ListName({ $$inline: true });
     	listitems = new ListItems({ $$inline: true });
 
     	const block = {
     		c: function create() {
+    			create_component(listname.$$.fragment);
+    			t = space();
     			create_component(listitems.$$.fragment);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
+    			mount_component(listname, target, anchor);
+    			insert_dev(target, t, anchor);
     			mount_component(listitems, target, anchor);
     			current = true;
     		},
     		p: noop,
     		i: function intro(local) {
     			if (current) return;
+    			transition_in(listname.$$.fragment, local);
     			transition_in(listitems.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
+    			transition_out(listname.$$.fragment, local);
     			transition_out(listitems.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
+    			destroy_component(listname, detaching);
+    			if (detaching) detach_dev(t);
     			destroy_component(listitems, detaching);
     		}
     	};
@@ -850,8 +978,8 @@ var app = (function () {
     		c: function create() {
     			main = element("main");
     			create_component(list.$$.fragment);
-    			attr_dev(main, "class", "svelte-118ia26");
-    			add_location(main, file, 5, 0, 84);
+    			attr_dev(main, "class", "svelte-mhbv4v");
+    			add_location(main, file, 4, 0, 66);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -891,34 +1019,20 @@ var app = (function () {
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
-    	let { name } = $$props;
-    	const writable_props = ['name'];
+    	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$$set = $$props => {
-    		if ('name' in $$props) $$invalidate(0, name = $$props.name);
-    	};
-
-    	$$self.$capture_state = () => ({ List, name });
-
-    	$$self.$inject_state = $$props => {
-    		if ('name' in $$props) $$invalidate(0, name = $$props.name);
-    	};
-
-    	if ($$props && "$$inject" in $$props) {
-    		$$self.$inject_state($$props.$$inject);
-    	}
-
-    	return [name];
+    	$$self.$capture_state = () => ({ List });
+    	return [];
     }
 
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance, create_fragment, safe_not_equal, { name: 0 });
+    		init(this, options, instance, create_fragment, safe_not_equal, {});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -926,21 +1040,6 @@ var app = (function () {
     			options,
     			id: create_fragment.name
     		});
-
-    		const { ctx } = this.$$;
-    		const props = options.props || {};
-
-    		if (/*name*/ ctx[0] === undefined && !('name' in props)) {
-    			console.warn("<App> was created without expected prop 'name'");
-    		}
-    	}
-
-    	get name() {
-    		throw new Error("<App>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set name(value) {
-    		throw new Error("<App>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
 

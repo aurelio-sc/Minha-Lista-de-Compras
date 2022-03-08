@@ -1,9 +1,5 @@
-# Layout Ideas:
-<div align="center">
-    <img src="./public/img/design/Pagina_Inicial.png" widht = 50%>
-    <img src="./public/img/design/Lista_Pronta.png"  widht = 50%>
-    <img src="./public/img/design/Criando_Editando_Lista.png"  widht = 50%>
-</div>
+# About:
+Simple list made with Svelte.
 
 *Psst — looking for a more complete solution? Check out [SvelteKit](https://kit.svelte.dev), the official framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.*
 
